@@ -56,4 +56,6 @@ if __name__ == "__main__":
                 'rampbkd.ramp_set_state:main',
                 'ramp_new_submissions='
                 'rampbkd.ramp_new_submissions:main',
+                'ramp_score_submissions='
+                'rampbkd.ramp_score_submissions:main',
             ]})

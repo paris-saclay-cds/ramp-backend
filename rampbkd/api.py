@@ -219,3 +219,68 @@ def _load_submission(path, fold_id, typ, ext):
     else:
         return NotImplementedError("No reader implemented for extension {ext}"
                                    .format(ext))
+
+
+def print_submissions_to_score(config, event_name, force=False):
+    """
+    Retrieve a list of submissions and their associated files
+    depending on their current status
+
+    Parameters
+    ----------
+    config : str
+        path to the ramp-backend YAML configuration file
+    event_name : str
+        name of the RAMP event
+    state : str, optional
+        state of the requested submissions (default is 'new')
+
+    Returns
+    -------
+    List of tuples (int, List[str]) :
+        (submission_id, [path to submission files on the db])
+
+    Raises
+    ------
+    ValueError :
+        when mandatory connexion parameters are missing from config
+    UnknownStateError :
+        when the requested state does not exist in the database
+
+    """
+    # Read config from external file
+    conf = read_backend_config(config)
+
+    # Create database url
+    db_url = URL(**conf['sqlalchemy'])
+    db = create_engine(db_url)
+
+    # Create a configured "Session" class
+    Session = sessionmaker(db)
+
+    # Link the relational model to the database
+    Base.metadata.create_all(db)
+
+    # Connect to the dabase and perform action
+    with db.connect() as conn:
+        session = Session(bind=conn)
+
+        submissions = select_submissions_by_state(session, event_name,
+                                                  state='tested')
+
+        if not submissions:
+            print('No submission to score')
+            return []
+
+        subinfo = [(submission.id, submission.name, submission.team.name)
+                   for submission in submissions]
+
+    for id_, subname, team_name in subinfo:
+        print("Submission ID: {}".format(id_))
+        cmdline = ('fab score_submission:e="{}",t="{}",s="{}"'
+                   .format(event_name, team_name, subname))
+        if force:
+            cmdline += ',force=True'
+        print(cmdline)
+
+    return subinfo
