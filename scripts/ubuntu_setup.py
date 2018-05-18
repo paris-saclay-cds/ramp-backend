@@ -19,7 +19,7 @@ usage()
 
   Usage:
 
-    ${bold}./ami_setup.sh <ramp_kit_name> <ramp_environment_file>${normal}
+    ${bold}./ubuntu_setup.sh <ramp_kit_name> <ramp_environment_file>${normal}
 
     where <ramp_kit_name> stands for the name of the RAMP kit on GitHub
         ${underline}https://github.com/ramp-kits/<ramp_kit_name>${normal}
