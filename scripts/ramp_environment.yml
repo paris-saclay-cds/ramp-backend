@@ -3,15 +3,10 @@ channels:
   - conda-forge
 dependencies:
   - numpy
-  - scipy
-  - pandas
-  - jupyter
-  - matplotlib
-  - scikit-learn
+  - pyyaml
   - psycopg2
   - sqlalchemy
   - boto3
   - pip:
-    - https://api.github.com/repos/paris-saclay-cds/ramp-workflow/zipball/master
     - https://api.github.com/repos/paris-saclay-cds/ramp-backend/zipball/master
 
