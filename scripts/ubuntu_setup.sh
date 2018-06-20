@@ -47,12 +47,11 @@ data_dir="$kit_dir/data"
 #######################################################
 miniconda_install() {
   LATEST_MINICONDA="http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
-  wget -q $LATEST_MINICONDA -O miniconda.sh
-  chmod +x miniconda.sh
-  /bin/bash miniconda.sh -b -p
+  wget -q $LATEST_MINICONDA -O ~/miniconda.sh
+  bash ~/miniconda.sh -b -p $HOME/miniconda3
 
-  echo 'export PATH="${HOME}/miniconda3/bin:$PATH"' >> .profile
-  source .profile
+  echo 'export PATH="${HOME}/miniconda3/bin:$PATH"' >> ~/.profile
+  source ~/.profile
 
   conda update --yes --quiet conda
   pip install --upgrade pip
