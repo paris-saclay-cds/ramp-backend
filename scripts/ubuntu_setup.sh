@@ -4,6 +4,17 @@
 
 set -e
 
+# Script variables definition
+project_name="$1"
+ramp_dependencies="$2"
+
+RAMPKIT_DIR="$HOME/ramp-kits"
+kit_url="https://github.com/ramp-kits/$project_name"
+kit_dir="$RAMPKIT_DIR/$project_name"
+
+ami_environment="$kit_dir/ami_environment.yml"
+data_dir="$kit_dir/data"
+
 # Text management
 bold=`tput bold`
 normal=`tput sgr0`
@@ -28,19 +39,6 @@ usage()
         provided with this script
     "
 }
-
-#-----------------------------------------------------------
-# Script variables definition
-#-----------------------------------------------------------
-project_name="$1"
-ramp_dependencies="$2"
-
-RAMPKIT_DIR="$HOME/ramp-kits"
-kit_url="https://github.com/ramp-kits/$project_name"
-kit_dir="$RAMPKIT_DIR/$project_name"
-
-ami_environment="$kit_dir/ami_environment.yml"
-data_dir="$kit_dir/data"
 
 #######################################################
 # Batch install of latest Miniconda in $HOME directory
@@ -85,7 +83,9 @@ project_setup() {
   git clone $kit_url $kit_dir
   update_conda_env $ami_environment
   rm -rf $data_dir && mkdir $data_dir
-  echo "\n${bold}==> Last step is to put the backend data into '$data_dir'${normal}\n"
+  echo
+  echo "${bold}==> Last step is to put the backend data into '$data_dir/'${normal}"
+  echo
 }
 
 
