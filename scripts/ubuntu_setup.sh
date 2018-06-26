@@ -70,7 +70,8 @@ update_conda_env() {
 # Upgrade the kernal and install conda and RAMP dependencies
 #############################################################
 system_setup() {
-  sudo apt-get upgrade
+  sudo apt-get update
+  sudo apt-get upgrade --yes
   miniconda_install
   update_conda_env $ramp_dependencies
 }
