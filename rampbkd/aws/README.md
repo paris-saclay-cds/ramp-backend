@@ -6,59 +6,47 @@ file as the following.
 
 ## Configuration details
 
-```
+```yaml
 aws:
-    ami_image_id : ami-0bc19972
-    ami_user_name : ubuntu
-    instance_type : t2.micro
+    ami_image_id: ami-0bc19972
+    ami_user_name: ubuntu
+    instance_type: t2.micro
     key_name: key
     key_path: /home/user/.ssh/id_rsa
-    security_group : launch-wizard-1
-    remote_ramp_kit_folder : ~/ramp/iris
-    local_predictions_folder : ./predictions
-    local_log_folder : ./logs
-    check_status_interval_secs : 60
-    check_finished_training_interval_secs : 60
-    train_loop_interval_secs : 60
+    security_group: launch-wizard-1
+    remote_ramp_kit_folder: ~/ramp/iris
+    local_predictions_folder: ./predictions
+    local_log_folder: ./logs
+    check_status_interval_secs: 60
+    check_finished_training_interval_secs: 60
+    train_loop_interval_secs: 60
  ```
  
-`ami_image_id` is the id of the image to use, it should start with 'ami-'.
-The AMI should contain a folder `remote_ramp_kit_folder` (see below)
-which contains the ramp kit.
-
-`ami_user_name` is the username to connect with remotely on ec2 instances.
-
-`instance_type` is the instance type (check https://ec2instances.info/).
-
-`key_name` is the name of the key to connect with, so `key_name` should
-exist im amazon. It can be created using their web app, or manually via
-`aws` like this :
-```aws ec2 import-key-pair --key-name <put key name here> --public-key-material "<put public key here>"```
-
-`security_group` is the name of the security group to use.
-Security groups control which ports are accepted/blocked inbound or outbound.
-They can be created in the web app of amazon. Use `default`
-to use the default one.
-
-`remote_ramp_kit_folder` is the folder in the ec2 instance
-where the ramp-kit will reside. It should
-be possible to launch `ramp_test_submission` in that folder.
-
-`local_predictions_folder` is the local folder where the predictions are
+- `ami_image_id` is the id of the image to use, it should start with 'ami-'.
+  The AMI should contain a folder `remote_ramp_kit_folder` (see below)
+  which contains the ramp kit.
+- `ami_user_name` is the username to connect with remotely on ec2 instances.
+- `instance_type` is the instance type (check https://ec2instances.info/).
+- `key_name` is the name of the key to connect with, so `key_name` should
+  exist im amazon. It can be created using their web app, or manually via
+  `aws` like this:
+  
+  ```aws ec2 import-key-pair --key-name <put key name here> --public-key-material "<put public key here>"```
+- `security_group` is the name of the security group to use.
+  Security groups control which ports are accepted/blocked inbound or outbound.
+  They can be created in the web app of amazon. Use `default`to use the default one.
+- `remote_ramp_kit_folder` is the folder in the ec2 instance where the ramp-kit will reside. It should be possible to launch `ramp_test_submission` in that folder.
+- `local_predictions_folder` is the local folder where the predictions are
 downloaded (from the ec2 instance).
-
-`local_log_folder` is the local folder where the logs are downloaded
+- `local_log_folder` is the local folder where the logs are downloaded
 (from the ec2 instance). The logs contain the standard output obtained
 from running `ramp_test_submission` for a given submission.
-
-`check_status_interval_secs` is the number of secs to wait until we
+- `check_status_interval_secs` is the number of secs to wait until we
 recheck whether an ec2 instance is ready to be used.
-
-`check_finished_training_interval_secs` is the number of secs to wait
+- `check_finished_training_interval_secs` is the number of secs to wait
 until we recheck whether the training of a submission in an ec2
 instance is finished.
-
-`train_loop_interval_secs` is the number of secs to wait each time we
+- `train_loop_interval_secs` is the number of secs to wait each time we
 process new events in `train_loop`
 
 ## Using the API
